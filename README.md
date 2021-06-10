@@ -4,9 +4,10 @@ unofficial EDA tool docs
 
 ## Experiments
 
-## References
+- [Exp01](experiments/exp01): simple make + yosys + nextpnr build example
 
-- [Exp01](): simple make + yosys + nextpnr build example
+
+## References
 
 ### Tools
 - Yosys (Verilog synth/sim): [docs](http://www.clifford.at/yosys/documentation.html) /
