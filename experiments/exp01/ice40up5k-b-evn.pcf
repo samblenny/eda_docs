@@ -1,0 +1,46 @@
+# Lattice iCE40 UltraPlus Evaluation Board
+# - Board P/N: iCE40UP5K-B-EVN
+# - iCE40 Chip:  iCE40UP5K-SG48
+
+# SG48 Bank0
+# set_io --warn-no-port IOT_37A 23     # header B pin 3, SW2:1/8
+# set_io --warn-no-port IOT_36B 25     # header B pin 5, SW2:2/7
+# set_io --warn-no-port IOT_39A 26     # header B pin 7, PMOD pin 8
+# set_io --warn-no-port IOT_38B 27     # header B pin 9, PMOD pin 7
+# set_io --warn-no-port IOT_43A 32     # header B pin 11, PMOD pin 9
+# set_io --warn-no-port IOT_42B 31     # header B pin 13, PMOD pin 10
+# set_io --warn-no-port IOT_45A_G1 37  # header B pin 15
+# set_io --warn-no-port IOT_44B 34     # header B pin 17, SW2:3/6
+# set_io --warn-no-port IOT_49A 43     # header B pin 19, SW2:4/5
+# set_io --warn-no-port IOT_48B 36     # header B pin 8
+# set_io --warn-no-port IOT_51A 42     # header B pin 10
+# set_io --warn-no-port IOT_50B 38     # header B pin 12
+# set_io --warn-no-port IOT_41A 28     # header B pin 14
+set_io ICE_CLK 35                    # IOT_46B_G0, header B pin 16
+# set_io --warn-no-port LED_BLUE 39    # RGB0, header A pin 3
+# set_io --warn-no-port LED_GREEN 40   # RGB1, header A pin 5
+# set_io --warn-no-port LED_RED 41     # RGB2, header A pin 9
+
+# SG48 Bank1
+# ICE_SS:16, ICE_SCK:15, ICE_MOSI:17, ICE_MISO:14
+# CRESET_B:8, CDONE:7
+# set_io --warn-no-port IOB_22A 12     # header C pin 2
+# set_io --warn-no-port IOB_23B 21     # header C pin 4
+# set_io --warn-no-port IOB_24A 13     # header C pin 6
+# set_io --warn-no-port IOB_25B_G3 20  # header C pin 8
+# set_io --warn-no-port IOB_29B 19     # header C pin 10
+# set_io --warn-no-port IOB_31B 18     # header C pin 12
+# set_io --warn-no-port IOB_20A 11     # header C pin 14
+# set_io --warn-no-port IOB_18A 10     # header C pin 16
+# set_io --warn-no-port IOB_16A 9      # header C pin 18
+# set_io --warn-no-port IOB_13B 6      # header C pin 20
+
+# SG48 Bank2
+# set_io --warn-no-port IOB_8A 4      # header C pin 3
+# set_io --warn-no-port IOB_9B 3      # header C pin 5
+# set_io --warn-no-port IOB_4A 48     # header C pin 7
+# set_io --warn-no-port IOB_5B 45     # header C pin 9
+# set_io --warn-no-port IOB_2A 47     # header C pin 11
+# set_io --warn-no-port IOB_3B_G6 44  # header C pin 13
+# set_io --warn-no-port IOB_0A 46     # header C pin 15
+# set_io --warn-no-port IOB_6A 2      # header C pin 17
