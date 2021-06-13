@@ -49,6 +49,7 @@ git rev-parse HEAD
 # c495861c19bd0976c88d4964f912abe76f3901c3
 cd icestorm
 make -j$(nproc)
+sudo make install
 # creates:
 # /usr/local/share/icebox/*.txt
 # /usr/local/bin/icebox*

@@ -5,6 +5,11 @@
 - [Exp01](experiments/exp01): simple make + yosys + nextpnr build example
 
 
+## Toolchain Build and Install Procedure
+
+See [/toolchain](/toolchain)
+
+
 ## Reference
 
 ### Tools
