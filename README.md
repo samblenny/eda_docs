@@ -7,7 +7,7 @@
 
 ## Toolchain Build and Install Procedure
 
-See [/toolchain](/toolchain)
+See [toolchain/](toolchain)
 
 
 ## Reference
