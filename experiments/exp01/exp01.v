@@ -9,19 +9,28 @@ module exp01(/*AUTOARG*/
    );
    input ICE_CLK;
    output reg LED_RED;
-   reg [15:0] count = 0;
-   wire pll_clk_out, pll_locked, clk;
+   reg [25:0] count = 0;
+   wire pll_clk_out, pll_locked, clk, reset;
    /*AUTOINPUT*/
    /*AUTOOUTPUT*/
    /*AUTOWIRE*/
    /*AUTOREG*/
 
-   pll pll_ (.clock_in(ICE_CLK), .clock_out(pll_clk_out), .locked(pll_locked));
-   SB_GB clk_gb (.USER_SIGNAL_TO_GLOBAL_BUFFER(pll_clk_out), .GLOBAL_BUFFER_OUTPUT(clk));
+   pll pll_ (.clock_in(ICE_CLK), .clock_out(clk), .locked(pll_locked));
+   assign reset = ~pll_locked;
 
-   always @(posedge clk /*AS*/) begin
-      count <= count + 1;
-      LED_RED <= count[15];
+   always @(posedge clk or posedge reset /*AS*/) begin
+      if (reset) begin
+         count <= 0;
+         LED_RED <= 0;
+      end
+      else begin
+         case (count)
+           0: count <= 26'd9554433;      // Trim offset to get 1Hz MSB toggle: (2^25)-24e6+1
+           default: count <= count + 1;
+         endcase
+         LED_RED <= count[25];
+      end
    end
 
 endmodule
