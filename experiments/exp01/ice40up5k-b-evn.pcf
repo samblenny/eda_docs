@@ -18,8 +18,8 @@
 # set_io --warn-no-port IOT_41A 28     # header B pin 14
 set_io ICE_CLK 35                    # IOT_46B_G0, header B pin 16
 # set_io --warn-no-port LED_BLUE 39    # RGB0, header A pin 3
-# set_io --warn-no-port LED_GREEN 40   # RGB1, header A pin 5
-set_io --warn-no-port LED_RED 41     # RGB2, header A pin 9
+set_io --warn-no-port LED_GREEN 40   # RGB1, header A pin 5
+# set_io --warn-no-port LED_RED 41     # RGB2, header A pin 9
 
 # SG48 Bank1
 # ICE_SS:16, ICE_SCK:15, ICE_MOSI:17, ICE_MISO:14
