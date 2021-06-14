@@ -14,9 +14,9 @@ module exp01(/*AUTOARG*/
    /*AUTOINPUT*/
 
    localparam clk_hz = 24000000;     // 24 MHz clock
-   localparam prescale_max = 239;    // tick=42ps; overflow at 10ns
+   localparam prescale_max = 239;    // tick=42ns; overflow at 10us
    localparam prescale_msb = 7;      // ceil(log2(prescale_max))-1
-   localparam s_timer_max = 99999;   // tick=10ns; overflow at 1s
+   localparam s_timer_max = 99999;   // tick=10us; overflow at 1s
    localparam s_timer_msb = 16;      // ceil(log2(ms_timer_max))-1
 
    wire pll_clk_out, pll_locked, clk, reset;
@@ -42,7 +42,7 @@ module exp01(/*AUTOARG*/
          LED_GREEN <= 1;   // LED active low
       end
       else begin
-         // Prescaler overflows after 10ns
+         // Prescaler overflows after 10us
          if (prescale == prescale_max) begin
             prescale <= 0;
             prescale_overflow <= 1;
