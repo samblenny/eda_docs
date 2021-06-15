@@ -22,8 +22,10 @@ $(BIN): $(ASC)
 	@grep -i 'warn\|error' $(YLOG) || echo "<none>"
 	@printf "\n== nextpnr-ice40 warnings and errors ==\n\n"
 	@grep -i 'warn\|error' $(NLOG) || echo "<none>"
+	@printf "\n== yosys stats ==\n\n"
+	@egrep -i '^\s+SB_|number of cells' $(YLOG) || echo "<none>"
 	@printf "\n== nextpnr-ice40 timing and device utilisation ==\n\n"
-	@grep -i 'frequency\|timing' $(NLOG) && echo || true
+	@grep -i 'max frequency' $(NLOG) && echo || true
 	@grep -A 15 'Info: Device utilisation' $(NLOG) || true
 
 prog: $(BIN)
