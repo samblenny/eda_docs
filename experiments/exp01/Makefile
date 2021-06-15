@@ -13,7 +13,10 @@ PRE_PACK=pre_pack.py
 CRYSTAL_MHZ=12
 CLOCK_MHZ=24
 
-summary: $(BIN)
+YS_SCRIPT=read_verilog -noautowire $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)
+
+$(BIN): $(ASC)
+	icepack $(ASC) $(BIN)
 	@printf "\n=========================\n=== Build Log Summary ===\n=========================\n"
 	@printf "\n== yosys warnings and errors ==\n\n"
 	@grep -i 'warn\|error' $(YLOG) || echo "<none>"
@@ -23,9 +26,6 @@ summary: $(BIN)
 	@grep -i 'frequency\|timing' $(NLOG) && echo || true
 	@grep -A 15 'Info: Device utilisation' $(NLOG) || true
 
-$(BIN): $(ASC)
-	icepack $(ASC) $(BIN)
-
 prog: $(BIN)
 	iceprog $(BIN)
 
@@ -34,7 +34,7 @@ $(ASC): $(JSON) $(PCF) $(PRE_PACK)
 
 $(JSON): $(PLL_V) $(V_IN)
 	mkdir -p $(BUILD_DIR)
-	yosys -q -l $(YLOG) -p 'read_verilog $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)'
+	yosys -q -l $(YLOG) -p '$(YS_SCRIPT)'
 
 $(PLL_V):
 	icepll -i $(CRYSTAL_MHZ) -o $(CLOCK_MHZ) -m -f $(PLL_V)
