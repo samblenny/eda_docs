@@ -19,7 +19,7 @@ summary: $(BIN)
 	@grep -i 'warn\|error' $(YLOG) || echo "<none>"
 	@printf "\n== nextpnr-ice40 warnings and errors ==\n\n"
 	@grep -i 'warn\|error' $(NLOG) || echo "<none>"
-	@printf "\n== nextpnr-ice40 timing device utilisation ==\n\n"
+	@printf "\n== nextpnr-ice40 timing and device utilisation ==\n\n"
 	@grep -i 'frequency\|timing' $(NLOG) && echo || true
 	@grep -A 15 'Info: Device utilisation' $(NLOG) || true
 
