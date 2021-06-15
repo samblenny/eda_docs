@@ -1,17 +1,11 @@
-// verilog-mode: https://veripool.org/verilog-mode/help/
 `include "pll.v"
 
-module exp01(/*AUTOARG*/
+module exp01(
    // Outputs
-   LED_GREEN,
+   output LED_GREEN, LED_RED,
    // Inputs
-   ICE_CLK
+   input ICE_CLK, IOT_37A, IOT_36B
    );
-
-   output reg LED_GREEN;
-   input ICE_CLK;
-   /*AUTOOUTPUT*/
-   /*AUTOINPUT*/
 
    // Timing calculations are for 24_000_000 Hz clock
    // prescale: 240 * 42ns ticks --> overflow at 10us
@@ -30,21 +24,18 @@ module exp01(/*AUTOARG*/
    reg [s_timer_msb:0]  s_timer = 0;
    reg                  led_en = 0;
    reg                  led_pwm = 0;
-   /*AUTOREG*/
 
-   wire pll_clk_out, pll_locked, clk, reset;
-   /*AUTOWIRE*/
-
+   wire pll_locked, clk;
    pll pll_ (.clock_in(ICE_CLK), .clock_out(clk), .locked(pll_locked));
-   assign reset = ~pll_locked;
+   wire reset = ~pll_locked;
 
-   always @(posedge clk or posedge reset /*AS*/) begin
+   always @(posedge clk or posedge reset) begin
       if (reset) begin
          prescale <= prescale_init;
          s_timer <= s_timer_init;
          led_en <= 0;
          led_pwm <= 0;
-         LED_GREEN <= 1;  // LED active low
+         /*AUTORESET*/
       end
       else begin
          // Increment timers, checking carry bits to use calibrated overflow values
@@ -52,15 +43,18 @@ module exp01(/*AUTOARG*/
          if (prescale[prescale_msb]) begin
             s_timer <= s_timer[s_timer_msb] ? s_timer_init : s_timer + 1;
          end
-         // Pulse LED: active low, enable controls visible duty cycle, pwm controls dimming
+         // Update LED signals: en controls visible duty cycle, pwm controls dimming
          case (s_timer)
            s_timer_150ms: led_en <= 1;
            s_timer_max: led_en <= 0;
            default: ;
          endcase
          led_pwm <= &s_timer[6:0];
-         LED_GREEN = ~(led_en & led_pwm);
       end
    end
+
+   // Pulse LED, active low
+   assign LED_GREEN = ~(IOT_37A & led_en & led_pwm);
+   assign LED_RED = ~(IOT_36B & led_en & led_pwm);
 
 endmodule

@@ -3,8 +3,8 @@
 # - iCE40 Chip:  iCE40UP5K-SG48
 
 # SG48 Bank0
-# set_io --warn-no-port IOT_37A 23     # header B pin 3, SW2:1/8
-# set_io --warn-no-port IOT_36B 25     # header B pin 5, SW2:2/7
+set_io --warn-no-port IOT_37A 23     # header B pin 3, SW2:1/8
+set_io --warn-no-port IOT_36B 25     # header B pin 5, SW2:2/7
 # set_io --warn-no-port IOT_39A 26     # header B pin 7, PMOD pin 8
 # set_io --warn-no-port IOT_38B 27     # header B pin 9, PMOD pin 7
 # set_io --warn-no-port IOT_43A 32     # header B pin 11, PMOD pin 9
@@ -19,7 +19,7 @@
 set_io ICE_CLK 35                    # IOT_46B_G0, header B pin 16
 # set_io --warn-no-port LED_BLUE 39    # RGB0, header A pin 3
 set_io --warn-no-port LED_GREEN 40   # RGB1, header A pin 5
-# set_io --warn-no-port LED_RED 41     # RGB2, header A pin 9
+set_io --warn-no-port LED_RED 41     # RGB2, header A pin 9
 
 # SG48 Bank1
 # ICE_SS:16, ICE_SCK:15, ICE_MOSI:17, ICE_MISO:14
