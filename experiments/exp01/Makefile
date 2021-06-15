@@ -32,16 +32,14 @@ prog: $(BIN)
 $(ASC): $(JSON) $(PCF) $(PRE_PACK)
 	nextpnr-ice40 $(PKG) -l $(NLOG) --pcf $(PCF) --pre-pack $(PRE_PACK) --json $(JSON) --asc $(ASC)
 
-$(JSON): $(PLL_V) $(V_IN) $(BUILD_DIR)
+$(JSON): $(PLL_V) $(V_IN)
+	mkdir -p $(BUILD_DIR)
 	yosys -q -l $(YLOG) -p 'read_verilog $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)'
 
 $(PLL_V):
 	icepll -i $(CRYSTAL_MHZ) -o $(CLOCK_MHZ) -m -f $(PLL_V)
 	sed -i 's/SB_PLL40_CORE/SB_PLL40_PAD/' $(PLL_V)
 	sed -i 's/REFERENCECLK/PACKAGEPIN/' $(PLL_V)
-
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
 
 clean:
 	rm -f $(JSON) $(ASC) $(BIN) $(YLOG) $(NLOG)
