@@ -61,6 +61,11 @@ guess based on reading the code and cross-checking with IEEE 1800-2017.
 
 | Function                                               | Description             |
 |--------------------------------------------------------|-------------------------|
+| `typeof(expr) $past(expr, num_steps=1)`                | 16.9.3: value of expression at `num_steps` clocks in the past |
+| `1'b $rose(node)`                                      | 16.9.3: `(~($past(node)&1)) & (node&1)` |
+| `1'b $fell(node)`                                      | 16.9.3: `($past(node)&1) & (~(node&1))` |
+| `1'b $stable(node)`                                    | 16.9.3: `$past(node) == node` |
+| `1'b $changed(node)`                                   | 16.9.3: `$past(node) != node` |
 | `int $bits(expr_or_type)`                              | 20.6.2: number of bits required to hold expression or type |
 | `int $left(expr_or_type [, dimension_expr=1])`         | 20.7: left bound of expression's dimension |
 | `int $right(expr_or_type [, dimension_expr=1])`        | 20.7: right bound of expression's dimension |
@@ -69,14 +74,9 @@ guess based on reading the code and cross-checking with IEEE 1800-2017.
 | `int $size(expr_or_type [, dimension_expr=1])`         | 20.7: number of elements in dimension =`$high - $low + 1` |
 | `int $countbits(expr, control_bit [, control_bit...])` | 20.9: count of bits in expression matching one of the control bits ('0, '1, 'x, 'z) |
 | `int $countones(expr)`                                 | 20.9: equivalent to `$countbits(expr,'1)` |
-| `int (1'b) $onehot(expr)`                              | 20.9: equivalent to `$countbits(expr,'1)==1` |
-| `int $onehot0(expr)`                                   | 20.9: equivalent to `$countbits(expr,'1)<=1` |
-| `int $isunknown(expr)`                                 | 20.9: equivalent to `$countbits(expr,'x,'z)!=0` |
-| `$changed(node)`                                       | 20.13: `$past(node) != node` |
-| `$fell(node)`                                          | 20.13: `($past(node)&1) & (~(node&1))` |
-| `$past(node, num_steps=1)`                             | 20.13: value of `node` at `num_steps` clocks in the past |
-| `$rose(node)`                                          | 20.13: `(~($past(node)&1)) & (node&1)` |
-| `$stable(node)`                                        | 20.13: `$past(node) == node` |
+| `1'b $onehot(expr)`                                    | 20.9: equivalent to `$countbits(expr,'1)==1` |
+| `1'b $onehot0(expr)`                                   | 20.9: equivalent to `$countbits(expr,'1)<=1` |
+| `1'b $isunknown(expr)`                                 | 20.9: equivalent to `$countbits(expr,'x,'z)!=0` |
 
 
 ## Non-Standard Functions
