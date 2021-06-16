@@ -1,15 +1,16 @@
 # Yosys Verilog Functions & System Tasks
 
-This page attempts to document Verilog functions and system tasks that Yosys
-knows how to parse.
+This page attempts to document functions and system tasks that Yosys knows how
+to parse. Some of these follow the Verilog or SystemVerilog standards, and some
+are non-standard extensions specific to Yosys.
 
 The lists of names come from grepping `yosys/frontends/ast/simplify.cc`. The
 descriptions are my best guess based on reading the code in `simplify.cc`,
-reading the yosys README, and cross checking against the IEEE 1364-2005 Verilog
-standard.
+reading the yosys README, cross checking against IEEE 1364-2005 Verilog
+standard, and cross checking against IEEE 1800-2017 SystemVerilog standard.
 
 
-## Standard System Tasks
+## Verilog Standard System Tasks
 
 | Function                                                  | Description                                                     |
 |-----------------------------------------------------------|-----------------------------------------------------------------|
@@ -24,7 +25,7 @@ standard.
 | `uint64 $time`                                            | 17.7.1: returns simulated time as 64-bit integer, scaled to module's timescale |
 
 
-## Standard Math Functions
+## Verilog Standard Math Functions
 
 | Function                   | Description                       |
 |----------------------------|-----------------------------------|
@@ -54,10 +55,7 @@ standard.
 | `real $tanh(real x)`       | 17.11: hyperbolic tangent of x |
 
 
-## SystemVerilog Functions
-
-Yosys supports some SystemVerilog functions. Descriptions here are my best
-guess based on reading the code and cross-checking with IEEE 1800-2017.
+## SystemVerilog Standard Functions
 
 | Function                                               | Description             |
 |--------------------------------------------------------|-------------------------|
