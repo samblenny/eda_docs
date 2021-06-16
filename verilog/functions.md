@@ -54,6 +54,31 @@ standard.
 | `real $tanh(real x)`       | 17.11: hyperbolic tangent of x |
 
 
+## SystemVerilog Functions
+
+Yosys supports some SystemVerilog functions. Descriptions here are my best
+guess based on reading the code and cross-checking with IEEE 1800-2017.
+
+| Function                                               | Description             |
+|--------------------------------------------------------|-------------------------|
+| `int $bits(expr_or_type)`                              | 20.6.2: number of bits required to hold expression or type |
+| `int $left(expr_or_type [, dimension_expr=1])`         | 20.7: left bound of expression's dimension |
+| `int $right(expr_or_type [, dimension_expr=1])`        | 20.7: right bound of expression's dimension |
+| `int $low(expr_or_type [, dimension_expr=1])`          | 20.7: lesser bound of dimension = `($left < $right) ? $left : $right` |
+| `int $high(expr_or_type [, dimension_expr=1])`         | 20.7: greater bound of dimension = `($left < $right) ? $right : $left` |
+| `int $size(expr_or_type [, dimension_expr=1])`         | 20.7: number of elements in dimension =`$high - $low + 1` |
+| `int $countbits(expr, control_bit [, control_bit...])` | 20.9: count of bits in expression matching one of the control bits ('0, '1, 'x, 'z) |
+| `int $countones(expr)`                                 | 20.9: equivalent to `$countbits(expr,'1)` |
+| `int (1'b) $onehot(expr)`                              | 20.9: equivalent to `$countbits(expr,'1)==1` |
+| `int $onehot0(expr)`                                   | 20.9: equivalent to `$countbits(expr,'1)<=1` |
+| `int $isunknown(expr)`                                 | 20.9: equivalent to `$countbits(expr,'x,'z)!=0` |
+| `$changed(node)`                                       | 20.13: `$past(node) != node` |
+| `$fell(node)`                                          | 20.13: `($past(node)&1) & (~(node&1))` |
+| `$past(node, num_steps=1)`                             | 20.13: value of `node` at `num_steps` clocks in the past |
+| `$rose(node)`                                          | 20.13: `(~($past(node)&1)) & (node&1)` |
+| `$stable(node)`                                        | 20.13: `$past(node) == node` |
+
+
 ## Non-Standard Functions
 
 Yosys includes non-standard functions and attributes for formal verification
@@ -69,24 +94,8 @@ https://github.com/YosysHQ/yosys#verilog-attributes-and-non-standard-features
 | `$allseq`                  | for use in formal verification |
 | `$anyconst`                | any constant value |
 | `$anyseq`                  | any value |
-| `$past(node, num_steps=1)` | value of `node` at `num_steps` clocks in the past |
-| `$stable(node)`            | `$past(node) == node` |
-| `$rose(node)`              | `(~($past(node)&1)) & (node&1)` |
-| `$fell(node)`              | `($past(node)&1) & (~(node&1))` |
-| `$changed(node)`           | `$past(node) != node` |
 | `$global_clock`            | something to do with making specially configured flip flops |
-| `$countbits()`             | ? |
-| `$countones()`             | ? |
-| `$isunknown()`             | ? |
-| `$onehot()`                | ? |
-| `$onehot0()`               | ? |
 | `$sformatf()`              | ? |
-| `int $bits()`              | ? |
-| `int $high()`              | ? |
-| `int $left()`              | ? |
-| `int $low()`               | ? |
-| `int $right()`             | ? |
-| `int $size()`              | ? |
 | `$dumpall()`               | ? |
 | `$dumpfile()`              | ? |
 | `$dumpoff()`               | ? |
