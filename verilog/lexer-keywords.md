@@ -40,7 +40,7 @@ This table started off as the output of [gather_tokens.py](gather_tokens.py).
 | `>>=`                           |  |
 | `>>>=`                          |  |
 | `^=`                            |  |
-| `|=`                            |  |
+| `\|=`                           |  |
 | `always`                        |  |
 | `always_comb`                   |  |
 | `always_ff`                     |  |
