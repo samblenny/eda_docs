@@ -13,7 +13,7 @@ PRE_PACK=pre_pack.py
 CRYSTAL_MHZ=12
 CLOCK_MHZ=24
 
-YS_SCRIPT=read_verilog -noautowire $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)
+YS_SCRIPT=read_verilog -sv -noautowire $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)
 
 $(BIN): $(ASC)
 	icepack $(ASC) $(BIN)
