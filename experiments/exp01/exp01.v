@@ -12,13 +12,15 @@ module exp01(
    // s_timer: 100_000 * 10us ticks --> overflow at 1s
    // *_msb are sized to use as bitfield msb index
    // *_init and *_max constants are sized to include carry bit
-   localparam prescale_msb = 8;            // ceil(log2(240)); msb is carry
-   localparam prescale_max = 9'd255;       // (2^8)-1; max value before overflow
-   localparam prescale_init = 9'd16;       // (2^8)-240; max - ticks
-   localparam s_timer_msb = 17;            // ceil(log2(100_000)); msb is carry
-   localparam s_timer_max = 18'd131071;    // (2^17)-1; max value before overflow
-   localparam s_timer_init = 18'd31072;    // (2^17)-(10^5); max - ticks
-   localparam s_timer_150ms = 18'd116072;  // (2^17)-15000; 150ms before overflow
+   localparam prescale_ticks = 240;
+   localparam s_timer_ticks = 100_000;
+   localparam prescale_msb = $clog2(prescale_ticks);             // size of prescale reg; msb is carry
+   localparam prescale_max = {1'b0, (2**prescale_msb)-1};        // max prescale value before overflow
+   localparam prescale_init = prescale_max + 1 - prescale_ticks; // calibrated prescale overflow value
+   localparam s_timer_msb = $clog2(s_timer_ticks);               // size of s_timer reg; msb is carry
+   localparam s_timer_max = {1'b0, (2**s_timer_msb)-1};          // max s_timer value before overflow
+   localparam s_timer_init = s_timer_max + 1 - s_timer_ticks;    // calibrated s_timer overflow value
+   localparam s_timer_150ms = s_timer_max + 1 - 15000;           // 150.00ms before s_timer overflow
 
    reg [prescale_msb:0] prescale = 0;
    reg [s_timer_msb:0]  s_timer = 0;
