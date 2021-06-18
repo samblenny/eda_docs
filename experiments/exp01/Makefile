@@ -1,19 +1,19 @@
-TOP_MOD=exp01
 BUILD_DIR=build
-V_IN=$(TOP_MOD).v
-JSON=$(BUILD_DIR)/$(TOP_MOD).json
+TOP=exp01
+V_TOP=$(TOP).v
+V_PLL=pll.v
+V_SRC=blinky.v dual_timer.v
+V_SYNTH=$(V_TOP) $(V_PLL) $(V_SRC)
+JSON=$(BUILD_DIR)/$(TOP).json
 YLOG=$(BUILD_DIR)/yosys.log
-ASC=$(BUILD_DIR)/$(TOP_MOD).asc
+ASC=$(BUILD_DIR)/$(TOP).asc
 NLOG=$(BUILD_DIR)/nextpnr-ice40.log
-BIN=$(BUILD_DIR)/$(TOP_MOD).bin
+BIN=$(BUILD_DIR)/$(TOP).bin
 PKG=--up5k --package sg48
-PLL_V=pll.v
 PCF=ice40up5k-b-evn.pcf
 PRE_PACK=pre_pack.py
 CRYSTAL_MHZ=12
 CLOCK_MHZ=24
-
-YS_SCRIPT=read_verilog -sv -noautowire $(V_IN); synth_ice40 -top $(TOP_MOD) -json $(JSON)
 
 $(BIN): $(ASC)
 	icepack $(ASC) $(BIN)
@@ -34,14 +34,15 @@ prog: $(BIN)
 $(ASC): $(JSON) $(PCF) $(PRE_PACK)
 	nextpnr-ice40 $(PKG) -l $(NLOG) --pcf $(PCF) --pre-pack $(PRE_PACK) --json $(JSON) --asc $(ASC)
 
-$(JSON): $(PLL_V) $(V_IN)
+YS_SCRIPT=read_verilog -sv -noautowire $(V_SYNTH); synth_ice40 -top $(TOP) -json $(JSON)
+$(JSON): $(V_SYNTH)
 	mkdir -p $(BUILD_DIR)
 	yosys -q -l $(YLOG) -p '$(YS_SCRIPT)'
 
-$(PLL_V):
-	icepll -i $(CRYSTAL_MHZ) -o $(CLOCK_MHZ) -m -f $(PLL_V)
-	sed -i 's/SB_PLL40_CORE/SB_PLL40_PAD/' $(PLL_V)
-	sed -i 's/REFERENCECLK/PACKAGEPIN/' $(PLL_V)
+$(V_PLL):
+	icepll -i $(CRYSTAL_MHZ) -o $(CLOCK_MHZ) -m -f $(V_PLL)
+	sed -i 's/SB_PLL40_CORE/SB_PLL40_PAD/' $(V_PLL)
+	sed -i 's/REFERENCECLK/PACKAGEPIN/' $(V_PLL)
 
 clean:
 	rm -f $(JSON) $(ASC) $(BIN) $(YLOG) $(NLOG)
