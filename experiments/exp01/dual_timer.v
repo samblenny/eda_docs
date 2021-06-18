@@ -54,6 +54,7 @@ module dual_timer(/*AUTOARG*/
       if (reset) begin
          prescale <= pre_init;
          timer1 <= t1_init;
+         timer2 <= t2_init;
          t1 <= T1_INIT_PHASE;
          t2 <= T2_INIT_PHASE;
          /*AUTORESET*/
