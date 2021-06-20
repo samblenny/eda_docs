@@ -9,7 +9,7 @@ V_SYNTH=$(V_TOP) $(V_PLL) $(V_SRC)
 V_SRC_SIMPLE=$(BUILD_DIR)/simplified.v
 V_SIM=$(V_TB) $(V
 SIM_VVP=$(BUILD_DIR)/$(TB_TOP).vvp
-SIM_VCD=$(BUILD_DIR)/$(TB_TOP).vcd
+SIM_FST=$(BUILD_DIR)/$(TB_TOP).fst
 JSON=$(BUILD_DIR)/$(TOP).json
 YLOG=$(BUILD_DIR)/yosys.log
 ASC=$(BUILD_DIR)/$(TOP).asc
@@ -48,7 +48,8 @@ sim: $(V_TB) $(V_SRC) $(BUILD_DIR)
 # break the simulation.
 	yosys -q -p 'read_verilog -sv $(V_SRC); proc; write_verilog $(V_SRC_SIMPLE)'
 	iverilog -o $(SIM_VVP) $(V_SRC_SIMPLE) $(V_TB)
-	vvp $(SIM_VVP)
+# The -fst flag requests .fst dump file format (more efficient than .vcd)
+	vvp $(SIM_VVP) -fst
 
 YS_SCRIPT=read_verilog -sv -noautowire $(V_SYNTH); synth_ice40 -top $(TOP) -json $(JSON)
 $(JSON): $(V_SYNTH) $(BUILD_DIR)
@@ -63,7 +64,7 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 clean:
-	rm -f $(JSON) $(ASC) $(BIN) $(YLOG) $(NLOG) $(V_SRC_SIMPLE) $(SIM_VVP) $(SIM_VCD)
+	rm -f $(JSON) $(ASC) $(BIN) $(YLOG) $(NLOG) $(V_SRC_SIMPLE) $(SIM_VVP) $(SIM_FST)
 	rmdir $(BUILD_DIR)
 
 .PHONY: clean
